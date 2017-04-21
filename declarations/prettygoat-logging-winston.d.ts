@@ -18,8 +18,6 @@ export class WinstonLogger implements ILogger {
 }
 
 export class WinstonLoggerModule implements IModule {
-    constructor();
-
     modules(container: interfaces.Container): void;
     register(registry: IProjectionRegistry, serviceLocator?: IServiceLocator, overrides?: any): void
 }

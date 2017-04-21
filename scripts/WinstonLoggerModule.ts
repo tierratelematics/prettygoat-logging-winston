@@ -1,6 +1,6 @@
 import { interfaces } from "inversify";
 import { IModule, IProjectionRegistry, IServiceLocator, ILogger } from "prettygoat";
-import WinstonLogger from "./logger/WinstonLogger";
+import WinstonLogger from "./WinstonLogger";
 
 class WinstonLoggerModule implements IModule {
     modules = (container: interfaces.Container) => {

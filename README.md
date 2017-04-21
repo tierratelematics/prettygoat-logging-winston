@@ -7,7 +7,6 @@
 $ npm install prettygoat-logging-winston
 `
 
-## Usage
 Add this code to the boostrapper.
 ```typescript
 import {WinstonLoggerModule} from "prettygoat-logging-winston";
@@ -22,6 +21,37 @@ import {Logger, LoggerInstance} from "winston"
 
 container.bind<LoggerInstance>("LoggerInstance").toConstantValue(new Logger())
 ```
+
+## Usage
+
+Inject an `ILogger` instance to a class. 
+
+```typescript
+import {inject} from "inversify";
+
+class Example {
+    constructor(@inject("ILogger") private logger: ILogger) {};
+
+    [...]
+}
+```
+And use the logger in a class method.
+
+```typescript
+    [...]
+
+    public test() {
+        try {
+            // do something
+            this.logger.debug("A debug message");
+        } catch(err: Error) {
+            this.logger.error(err);            
+        }
+    }
+
+    [...]
+```
+ 
 
 ## License
 

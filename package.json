@@ -1,12 +1,12 @@
 {
   "name": "prettygoat-logging-winston",
   "description": "winston adapter for prettygoat",
-  "version": "0.1.0",
+  "version": "1.0.0-0",
   "dependencies": {
     "@types/node": "~7.0.5",
     "@types/socket.io": "~1.4.27",
     "@types/winston": "2.3.1",
-    "inversify": "3.3.0",
+    "inversify": "~4.1.1",
     "reflect-metadata": "0.1.8",
     "winston": "2.3.1"
   },
@@ -21,7 +21,7 @@
     "test": "smild test"
   },
   "peerDependencies": {
-    "prettygoat": "^2.1.0"
+    "prettygoat": "^4.0.0-3"
   },
   "typings": "./declarations/prettygoat-logging-winston.d.ts"
 }

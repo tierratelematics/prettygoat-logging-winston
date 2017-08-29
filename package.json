@@ -3,14 +3,14 @@
   "description": "winston adapter for prettygoat",
   "version": "1.0.0-0",
   "dependencies": {
-    "@types/node": "~7.0.5",
-    "@types/socket.io": "~1.4.27",
-    "@types/winston": "2.3.1",
     "inversify": "~4.1.1",
     "reflect-metadata": "0.1.8",
     "winston": "2.3.1"
   },
   "devDependencies": {
+    "@types/node": "~7.0.5",
+    "@types/socket.io": "~1.4.27",
+    "@types/winston": "2.3.1",
     "@types/expect.js": "~0.3.29",
     "@types/mocha": "~2.2.39",
     "expect.js": "~0.3.1",

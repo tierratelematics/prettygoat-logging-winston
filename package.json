@@ -20,7 +20,7 @@
     "test": "smild test"
   },
   "peerDependencies": {
-    "prettygoat": "^4.0.0"
+    "prettygoat": ">=4 <=5"
   },
   "main": "dist",
   "typings": "dist"

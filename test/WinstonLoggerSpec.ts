@@ -33,14 +33,16 @@ describe("Given a WinstonLogger", () => {
     context("when a valid log level is set", () => {
         it("should set the correct log level into winston logger", () => {
             subject.setLogLevel(LogLevel.Info);
-            expect(subject.getLogLevel()).to.be(LogLevel.Info);
+
+            expect(logger.object.level).to.be("info");
         });
     });
 
     context("when an invalid log level is set", () => {
         it("should set the 'DEBUG' log level", () => {
             subject.setLogLevel(-1);
-            expect(subject.getLogLevel()).to.be(LogLevel.Debug);
+
+            expect(logger.object.level).to.be("debug");
         });
     });
 });

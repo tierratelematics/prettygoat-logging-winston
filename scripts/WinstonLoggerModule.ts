@@ -4,7 +4,8 @@ import WinstonLogger from "./WinstonLogger";
 
 class WinstonLoggerModule implements IModule {
     modules = (container: interfaces.Container) => {
-        container.unbind("ILogger");
+        if (container.isBound("ILogger"))
+            container.unbind("ILogger");
         container.bind<ILogger>("ILogger").to(WinstonLogger).inSingletonScope();
     };
 

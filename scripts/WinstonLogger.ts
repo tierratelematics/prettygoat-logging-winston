@@ -24,8 +24,10 @@ class WinstonLogger implements ILogger {
     }
 
     error(errorOrMessage: string | Error): void {
-        if (errorOrMessage && (errorOrMessage as Error).stack) this.logger.log("error", (errorOrMessage as Error).message, (errorOrMessage as Error).stack);
-        else this.logger.log("error", (errorOrMessage as string));
+        if (errorOrMessage && (errorOrMessage as Error).stack) this.logger.log(
+            "error", `${this.stringifyContext(this.context)} ${(errorOrMessage as Error).message}`,
+            (errorOrMessage as Error).stack);
+        else this.logger.log("error", this.stringifyContext(this.context), errorOrMessage);
     }
 
     setLogLevel(level: LogLevel): void {

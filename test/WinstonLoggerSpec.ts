@@ -20,13 +20,13 @@ describe("Given a WinstonLogger", () => {
     context("when asked to log a message", () => {
         it("should request the wiston logger to log with the defined level", () => {
             subject.debug("A debug Message");
-            logger.verify(l => l.log("debug", "A debug Message"), TypeMoq.Times.once());
+            logger.verify(l => l.log("debug", " A debug Message"), TypeMoq.Times.once());
             subject.info("An info Message");
-            logger.verify(l => l.log("info", "An info Message"), TypeMoq.Times.once());
+            logger.verify(l => l.log("info", " An info Message"), TypeMoq.Times.once());
             subject.warning("A warning Message");
-            logger.verify(l => l.log("warning", "A warning Message"), TypeMoq.Times.once());
+            logger.verify(l => l.log("warning", " A warning Message"), TypeMoq.Times.once());
             subject.error("An error Message");
-            logger.verify(l => l.log("error", "An error Message"), TypeMoq.Times.once());
+            logger.verify(l => l.log("error", "", "An error Message"), TypeMoq.Times.once());
         });
     });
 

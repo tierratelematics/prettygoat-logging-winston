@@ -9,6 +9,7 @@ const LEVELS = ["debug", "info", "warning", "error"];
 class WinstonLogger implements ILogger {
 
     private context: string[] = [];
+    private logLevel = LogLevel.Debug;
 
     constructor( @inject("LoggerInstance") private logger: LoggerInstance) { }
 
@@ -31,6 +32,7 @@ class WinstonLogger implements ILogger {
     }
 
     setLogLevel(level: LogLevel): void {
+        this.logLevel = level;
         this.logger.level = LEVELS[level] || LEVELS[LogLevel.Debug];
         this.info(`Log level set to ${this.logger.level.toUpperCase()}`);
     }
@@ -40,6 +42,7 @@ class WinstonLogger implements ILogger {
         if (context) copy.push(context);
         let logger = new WinstonLogger(this.logger);
         logger.setContext(copy);
+        logger.setLogLevel(this.logLevel);
         return logger;
     }
 

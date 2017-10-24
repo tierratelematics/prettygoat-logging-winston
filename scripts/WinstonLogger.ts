@@ -34,7 +34,6 @@ class WinstonLogger implements ILogger {
     setLogLevel(level: LogLevel): void {
         this.logLevel = level;
         this.logger.level = LEVELS[level] || LEVELS[LogLevel.Debug];
-        this.info(`Log level set to ${this.logger.level.toUpperCase()}`);
     }
 
     createChildLogger(context: string): ILogger {

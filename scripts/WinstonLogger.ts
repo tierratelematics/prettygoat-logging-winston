@@ -26,7 +26,7 @@ class WinstonLogger implements ILogger {
 
     error(errorOrMessage: string | Error): void {
         if (errorOrMessage && (errorOrMessage as Error).stack) this.logger.log(
-            "error", `${this.stringifyContext(this.context)} ${(errorOrMessage as Error).message}`,
+            "error", `${this.stringifyContext(this.context)}`,
             (errorOrMessage as Error).stack);
         else this.logger.log("error", this.stringifyContext(this.context), errorOrMessage);
     }
@@ -34,7 +34,6 @@ class WinstonLogger implements ILogger {
     setLogLevel(level: LogLevel): void {
         this.logLevel = level;
         this.logger.level = LEVELS[level] || LEVELS[LogLevel.Debug];
-        this.info(`Log level set to ${this.logger.level.toUpperCase()}`);
     }
 
     createChildLogger(context: string): ILogger {

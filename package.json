@@ -3,7 +3,7 @@
   "description": "winston adapter for prettygoat",
   "version": "1.2.2",
   "dependencies": {
-    "inversify": "~4.3.0",
+    "inversify": "^4.3.0",
     "lodash": "~4.17.4",
     "reflect-metadata": "0.1.8",
     "winston": "2.3.1"

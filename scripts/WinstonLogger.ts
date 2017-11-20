@@ -2,8 +2,11 @@ import { LoggerInstance } from "winston";
 import { injectable, inject } from "inversify";
 import { ILogger, LogLevel } from "prettygoat";
 import {map, clone} from "lodash";
+import * as EventEmitter from "events";
 
 const LEVELS = ["debug", "info", "warning", "error"];
+const emitter = new EventEmitter();
+emitter.setMaxListeners(999);
 
 @injectable()
 class WinstonLogger implements ILogger {
@@ -11,37 +14,42 @@ class WinstonLogger implements ILogger {
     private context: string[] = [];
     private logLevel = LogLevel.Debug;
 
-    constructor( @inject("LoggerInstance") private logger: LoggerInstance) { }
+    constructor( @inject("LoggerInstance") private winston: LoggerInstance) {
+        emitter.addListener("logLevelChange", (level) => {
+            this.logLevel = level;
+            this.winston.level = LEVELS[level] || LEVELS[LogLevel.Debug];
+        });
+    }
 
     debug(message: string): void {
-        this.logger.log("debug", `${this.stringifyContext(this.context)} ${message}`);
+        this.winston.log("debug", `${this.stringifyContext(this.context)} ${message}`);
     }
 
     info(message: string): void {
-        this.logger.log("info", `${this.stringifyContext(this.context)} ${message}`);
+        this.winston.log("info", `${this.stringifyContext(this.context)} ${message}`);
     }
     warning(message: string): void {
-        this.logger.log("warning", `${this.stringifyContext(this.context)} ${message}`);
+        this.winston.log("warning", `${this.stringifyContext(this.context)} ${message}`);
     }
 
     error(errorOrMessage: string | Error): void {
-        if (errorOrMessage && (errorOrMessage as Error).stack) this.logger.log(
+        if (errorOrMessage && (errorOrMessage as Error).stack) this.winston.log(
             "error", `${this.stringifyContext(this.context)}`,
             (errorOrMessage as Error).stack);
-        else this.logger.log("error", this.stringifyContext(this.context), errorOrMessage);
+        else this.winston.log("error", this.stringifyContext(this.context), errorOrMessage);
     }
 
     setLogLevel(level: LogLevel): void {
-        this.logLevel = level;
-        this.logger.level = LEVELS[level] || LEVELS[LogLevel.Debug];
+        emitter.emit("logLevelChange", level);
     }
 
     createChildLogger(context: string): ILogger {
         let copy = map<string, string>(this.context, clone);
         if (context) copy.push(context);
-        let logger = new WinstonLogger(this.logger);
+        let logger = new WinstonLogger(this.winston);
         logger.setContext(copy);
-        logger.setLogLevel(this.logLevel);
+        this.logLevel = this.logLevel;
+        this.winston.level = LEVELS[this.logLevel] || LEVELS[LogLevel.Debug];
         return logger;
     }
 

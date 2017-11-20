@@ -6,7 +6,7 @@ import * as EventEmitter from "events";
 
 const LEVELS = ["debug", "info", "warning", "error"];
 const emitter = new EventEmitter();
-emitter.setMaxListeners(100);
+emitter.setMaxListeners(999);
 
 @injectable()
 class WinstonLogger implements ILogger {

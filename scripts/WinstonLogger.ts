@@ -1,24 +1,19 @@
 import { LoggerInstance } from "winston";
-import { injectable, inject } from "inversify";
+import { injectable, inject, optional } from "inversify";
 import { ILogger, LogLevel } from "prettygoat";
 import {map, clone} from "lodash";
-import * as EventEmitter from "events";
+import { ILoggerConfig, DefaultLoggerConfig } from "inversify-logging";
 
 const LEVELS = ["debug", "info", "warning", "error"];
-const emitter = new EventEmitter();
-emitter.setMaxListeners(999);
 
 @injectable()
 class WinstonLogger implements ILogger {
 
     private context: string[] = [];
-    private logLevel = LogLevel.Debug;
 
-    constructor( @inject("LoggerInstance") private winston: LoggerInstance) {
-        emitter.addListener("logLevelChange", (level) => {
-            this.logLevel = level;
-            this.winston.level = LEVELS[level] || LEVELS[LogLevel.Debug];
-        });
+    constructor(@inject("LoggerInstance") private winston: LoggerInstance,
+                @inject("ILoggerConfig") @optional() private config: ILoggerConfig = new DefaultLoggerConfig()) {
+        this.winston.level = LEVELS[config.logLevel] || LEVELS[LogLevel.Debug];
     }
 
     debug(message: string): void {
@@ -39,17 +34,11 @@ class WinstonLogger implements ILogger {
         else this.winston.log("error", this.stringifyContext(this.context), errorOrMessage);
     }
 
-    setLogLevel(level: LogLevel): void {
-        emitter.emit("logLevelChange", level);
-    }
-
     createChildLogger(context: string): ILogger {
         let copy = map<string, string>(this.context, clone);
         if (context) copy.push(context);
-        let logger = new WinstonLogger(this.winston);
+        let logger = new WinstonLogger(this.winston, this.config);
         logger.setContext(copy);
-        this.logLevel = this.logLevel;
-        this.winston.level = LEVELS[this.logLevel] || LEVELS[LogLevel.Debug];
         return logger;
     }
 

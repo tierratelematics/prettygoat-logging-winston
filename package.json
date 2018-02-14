@@ -4,6 +4,7 @@
   "version": "1.4.0",
   "dependencies": {
     "inversify": "^4.3.0",
+    "inversify-logging": "^0.2.0",
     "lodash": "~4.17.4",
     "reflect-metadata": "0.1.8",
     "winston": "2.3.1"

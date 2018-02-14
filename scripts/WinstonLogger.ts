@@ -42,6 +42,10 @@ class WinstonLogger implements ILogger {
         return logger;
     }
 
+    setLogLevel() {
+
+    }
+
     setContext(context: string[]) {
         this.context = context;
     }

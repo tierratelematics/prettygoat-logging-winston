@@ -14,11 +14,11 @@ describe("Given a WinstonLogger", () => {
     beforeEach(() => {
         logger = TypeMoq.Mock.ofInstance<LoggerInstance>(new MockLoggerInstance());
         logger.setup(l => l.log(TypeMoq.It.isAnyString(), TypeMoq.It.isAnyString(), TypeMoq.It.isAny())).returns(() => null);
-        subject = new WinstonLogger(logger.object);
     });
 
     context("when asked to log a message", () => {
         it("should request the wiston logger to log with the defined level", () => {
+            subject = new WinstonLogger(logger.object);
             subject.debug("A debug Message");
             logger.verify(l => l.log("debug", " A debug Message"), TypeMoq.Times.once());
             subject.info("An info Message");
@@ -32,7 +32,7 @@ describe("Given a WinstonLogger", () => {
 
     context("when a valid log level is set", () => {
         it("should set the correct log level into winston logger", () => {
-            subject.setLogLevel(LogLevel.Info);
+            subject = new WinstonLogger(logger.object, { logLevel: LogLevel.Info});
 
             expect(logger.object.level).to.be("info");
         });
@@ -40,7 +40,7 @@ describe("Given a WinstonLogger", () => {
 
     context("when an invalid log level is set", () => {
         it("should set the 'DEBUG' log level", () => {
-            subject.setLogLevel(-1);
+            subject = new WinstonLogger(logger.object, { logLevel: -1});
 
             expect(logger.object.level).to.be("debug");
         });

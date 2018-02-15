@@ -1,7 +1,7 @@
 {
   "name": "prettygoat-logging-winston",
   "description": "winston adapter for prettygoat",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "dependencies": {
     "inversify": "^4.3.0",
     "inversify-logging": "^0.2.0",
